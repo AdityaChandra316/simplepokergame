@@ -120,9 +120,10 @@
 #table > :nth-child(2) {
   width: 100%;
   padding: 1em;
+  border-radius: 1em;
   display: flex;
   justify-content: space-evenly;
-  background-color: white;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 #table > :nth-child(2) > :nth-child(4) {
@@ -153,12 +154,7 @@
   width: 5em;
   padding: 1em;
   outline: none;
-  border: 1px solid gray;
-}
-
-#table input[type="text"]:focus {
-  border-color: black;
-  transition: border-color 0.2s ease;
+  border: none;
 }
 
 #table input[type="range"] {
