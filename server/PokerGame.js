@@ -370,18 +370,6 @@ class PokerGame extends EventEmitter {
       }
     }
   }
-  #LessThanTwoActivePlayersExist() {
-    let active_player_count = 0;
-    for (const player of this.players) {
-      if (player.chips && !player.eliminated && !player.folded_this_hand) {
-        active_player_count++;
-        if (active_player_count > 1) {
-          return false;
-        }
-      }
-    }
-    return true;
-  }
   #CalculatePots() {
     // Calculate pots.
     const pots = [];
@@ -596,7 +584,8 @@ class PokerGame extends EventEmitter {
     }
     this.round_ended = this.#HasRoundEnded();
     // If there is a showdown between multiple players.
-    if ((this.round == RIVER_ROUND && this.round_ended) || this.#LessThanTwoActivePlayersExist()) {
+    const next_player_index = this.#GetValidPlayerIndex(this.player_index + 1);
+    if ((this.round == RIVER_ROUND && this.round_ended) || next_player_index == this.player_index) {
       this.hand_ended = true;
       this.is_showing_down = true;
       while (this.community_cards.length < 5) {
@@ -620,7 +609,7 @@ class PokerGame extends EventEmitter {
       return;
     } 
     // Go to the next player index if we aren't moving between rounds or ending a hand.
-    this.player_index = this.#GetValidPlayerIndex(this.player_index + 1);
+    this.player_index = next_player_index;
     this.#CreateCallOrFoldTimeOut();
     this.emit("state_update");
   }
