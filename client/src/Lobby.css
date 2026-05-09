@@ -75,3 +75,9 @@
 #lobby button:active {
   background-color: darkred;
 }
+
+#lobby button:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}

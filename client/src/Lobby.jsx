@@ -27,7 +27,7 @@ function Lobby({ public_state, room, socket }) {
           <p>Room: {room}</p>
           <button onClick={() => {
             socket.current.emit("request_start_game");
-          }}>Request Start</button>
+          }} disabled={public_state.players[public_state.my_player_index].requested_start_game}>Request Start</button>
         </div>
       </div>
     </div>
