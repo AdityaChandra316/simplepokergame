@@ -1,0 +1,22 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: black;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  display: flow-root;
+  background-image: radial-gradient(circle, #414345, #232526);
+}
