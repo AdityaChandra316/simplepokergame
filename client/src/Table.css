@@ -68,6 +68,10 @@
   justify-content: center;
 }
 
+#table_central > :first-child > p {
+  color: cyan;
+}
+
 .player > div > :nth-child(2) {
   position: relative;
   z-index: 1;

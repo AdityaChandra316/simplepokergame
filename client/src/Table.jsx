@@ -10,7 +10,7 @@ function Table({ public_state, socket }) {
         <div id="table_central">
           <div>
             <img src="/pot_chips.png"></img>
-            <p><span style={{color: "cyan"}}>Pot:</span> ${public_state.total_pot}</p>
+            <p><span>Pot:</span> ${public_state.total_pot}</p>
           </div>
           <div>
             {public_state.community_cards.map((card, i) => <img key={i} src={CardToUrl(card)}></img>)}
