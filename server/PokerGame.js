@@ -55,7 +55,7 @@ class PokerGame extends EventEmitter {
     this.start_time;
     this.forced_action_timeout;
     this.turn_start_time;
-    this.delete_poker_game_timeout;
+    this.delete_poker_game_timeout = setTimeout(() => this.emit("delete_poker_game"), 10 * 60 * 1000);
     this.start_game_timeout;
   }
   ConnectPlayer(player_id, name) {
