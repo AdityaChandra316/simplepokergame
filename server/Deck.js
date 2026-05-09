@@ -1,3 +1,5 @@
+const crypto = require("crypto");
+
 const NUMBER_OF_CARDS = 52;
 
 class Deck {
@@ -11,7 +13,7 @@ class Deck {
     }
     for (let i = NUMBER_OF_CARDS - 1; i > 0; i--) {
       // Generate a random index from 0 to i
-      const j = Math.floor(Math.random() * (i + 1));
+      const j = crypto.randomInt(0, i + 1);
       // Swap elements array[i] and array[j]
       const temp = this.deck[i];
       this.deck[i] = this.deck[j];
