@@ -9,7 +9,7 @@ const app = express();
 const server = http.createServer(app);
 
 const PORT = 3000;
-const origin = "https://simplepokergame.com";
+const origin = "http://localhost:3000";
 
 const poker_games = {};
 
