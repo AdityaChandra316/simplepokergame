@@ -370,6 +370,14 @@ class PokerGame extends EventEmitter {
       }
     }
   }
+  #NoValidPlayersExist() {
+    for (const player of this.players) {
+      if (player.chips && !player.folded && !player.eliminated) {
+        return false;
+      }
+    }
+    return true;
+  }
   #CalculatePots() {
     // Calculate pots.
     const pots = [];
@@ -584,8 +592,12 @@ class PokerGame extends EventEmitter {
     }
     this.round_ended = this.#HasRoundEnded();
     // If there is a showdown between multiple players.
-    const next_player_index = this.#GetValidPlayerIndex(this.player_index + 1);
-    if ((this.round == RIVER_ROUND && this.round_ended) || next_player_index == this.player_index) {
+    let next_player_index;
+    const no_valid_players_exist = this.#NoValidPlayersExist();
+    if (!no_valid_players_exist) {
+      next_player_index = this.#GetValidPlayerIndex(this.player_index + 1);
+    }
+    if ((this.round == RIVER_ROUND && this.round_ended) || next_player_index == this.player_index || no_valid_players_exist) {
       this.hand_ended = true;
       this.is_showing_down = true;
       while (this.community_cards.length < 5) {
