@@ -513,11 +513,13 @@ class PokerGame extends EventEmitter {
         player.hole_cards = [this.deck.GetRandomCard(), this.deck.GetRandomCard()];
       }
 
+      // Current hand state.
       player.folded_this_hand = false;
-      player.bet_amount_this_round = 0;
+      player.bet_amount_this_hand = 0;
       player.amount_won_this_hand = 0;
 
-      player.bet_amount_this_hand = 0;
+      // Current betting-round state.
+      player.bet_amount_this_round = 0;
       player.last_action_this_round = 0;
       player.minimum_call_amount_following_last_act = 0;
     }
