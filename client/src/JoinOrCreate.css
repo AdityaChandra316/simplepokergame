@@ -60,12 +60,6 @@
   transition: border-color 0.2s ease;
 }
 
-/* Labels */
-
-#join_or_create label {
-  padding-right: 1em;
-}
-
 /* Buttons */
 
 #join_or_create button {
