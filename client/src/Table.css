@@ -48,7 +48,7 @@
   transform: translate(-50%, -50%);
 }
 
-#table_pot_info_container {
+#table_pot_info {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -59,11 +59,11 @@
   color: cyan;
 }
 
-#table_pot_info_container img {
+#table_pot_info img {
   height: 3em;
 }
 
-#table_pot_info_container p {
+#table_pot_info p {
   padding: 0 1em;
 
   border-radius: 9999px;
