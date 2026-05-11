@@ -4,13 +4,13 @@ function Lobby({ public_state, room, socket }) {
   return (
     <div id="lobby">
       <h1>Lobby</h1>
-      <div>
-        <div>
+      <div id="lobby_body">
+        <div id="lobby_header">
           <strong>Name</strong>
           <strong>Connection</strong>
           <strong>Start Status</strong>
         </div>
-        <div>
+        <div id="lobby_table_container">
           <table>
             {
               public_state.players.map((player, i) => (
@@ -23,7 +23,7 @@ function Lobby({ public_state, room, socket }) {
             }
           </table>
         </div>
-        <div>
+        <div id="lobby_footer">
           <p>Room: {room}</p>
           <button onClick={() => {
             socket.current.emit("request_start_game");

@@ -3,73 +3,101 @@
   src: url("/poker.otf") format("opentype");
 }
 
+/* Lobby layout */
+
 #lobby {
   position: relative;
   left: 50%;
   transform: translateX(-50%);
-  width: 400px;
-  height: 100vh;
+
   display: flex;
   flex-direction: column;
+
+  width: 400px;
+  height: 100dvh;
 }
 
 #lobby h1 {
-  font-family: "Poker";
   color: white;
+
+  font-family: "Poker";
   text-align: center;
 }
 
-#lobby > div {
-  font-family: sans-serif;
-  background-color: white;
+/* Lobby body */
+
+#lobby_body {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+
+  background-color: white;
+
+  font-family: sans-serif;
 }
 
-#lobby table {
+/* Lobby header */
+
+#lobby_header {
+  display: flex;
+
+  padding-top: 1em;
+  padding-bottom: 1em;
+
+  background-color: red;
+  color: white;
+
+  text-align: center;
+}
+
+#lobby_header strong {
+  flex: 1;
+}
+
+/* Lobby table */
+
+#lobby_table_container {
+  flex: 1 1 0;
+
+  overflow: scroll;
+}
+
+#lobby_table_container table {
   width: 100%;
+
   border-collapse: collapse;
   table-layout: fixed;
 }
 
-#lobby td {
+#lobby_table_container tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#lobby_table_container td {
   padding-top: 1em;
   padding-bottom: 1em;
+
   text-align: center;
 }
 
-#lobby tr:nth-child(even){background-color: #f2f2f2;}
+/* Lobby footer */
 
-#lobby > div > :first-child {
-  display: flex;
-  padding-top: 1em;
-  padding-bottom: 1em;
-  text-align: center;
-  background-color: red;
-  color: white;
-}
-
-#lobby > div > :first-child > strong {
-  flex: 1;
-}
-
-#lobby > div > :nth-child(2) {
-  flex: 1 1 0;
-  overflow: scroll;
-}
-
-#lobby > div > :nth-child(3) {
+#lobby_footer {
   display: flex;
   justify-content: space-between;
+
   padding: 1em;
 }
+
+/* Lobby buttons */
 
 #lobby button {
   padding: 1em;
+
+  border: none;
+
   background-color: red;
   color: white;
-  border: none;
 }
 
 #lobby button:active {

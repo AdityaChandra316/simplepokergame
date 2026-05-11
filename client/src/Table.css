@@ -2,161 +2,220 @@
   --table-unit: min(1.5vw, 1.5vh);
 }
 
-#table {
+/* Table layout */
+
+#table_container {
   position: absolute;
   left: 50%;
-  height: 100vh;
   transform: translateX(-50%);
+
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+
+  height: 100vh;
   gap: 7em;
   padding-top: 7em;
+
   font-family: sans-serif;
   font-size: var(--table-unit);
 }
 
-#table_central {
+#table {
+  position: relative;
+
+  width: min(70vw, 70vh);
+  height: min(70vw, 70vh);
+
+  border: 1em solid burlywood;
+  border-radius: 50%;
+
+  background-image: radial-gradient(circle, red, darkred);
+  color: white;
+}
+
+#table p {
+  margin: 0;
+}
+
+/* Center table info */
+
+#table_central_info_container {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
-.player {
-  position: absolute;
-  width: 0;
-  height: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.player_bet {
-  position: absolute;
-  transform: translate(-50%, -50%);
-}
-
-#table > :first-child {
-  position: relative;
-  width: min(70vw, 70vh);
-  height: min(70vw, 70vh);
-  border-radius: 50%;
-  border: 1em solid burlywood;
-  background-image: radial-gradient(circle, red, darkred);
-  color: white;
-}
-
-#table > :first-child p {
-  margin: 0;
-}
-
-.player > div > :first-child, 
-.player_bet, 
-#table_central > :first-child,  
-#table_central > :nth-child(2), 
-#table > :nth-child(2), 
-#table > :nth-child(2) > :nth-child(4) {
+#table_pot_info_container {
   display: flex;
   flex-direction: row;
-}
-
-.player > div > :first-child,  
-#table_central > :first-child, 
-#table_central > :nth-child(2) {
   justify-content: center;
-}
+  align-items: center;
 
-#table_central > :first-child > p {
+  margin-bottom: 1em;
+
   color: cyan;
 }
 
-.player > div > :nth-child(2) {
+#table_pot_info_container img {
+  height: 3em;
+}
+
+#table_pot_info_container p {
+  padding: 0 1em;
+
+  border-radius: 9999px;
+
+  background: rgba(0, 0, 0, 0.5);
+}
+
+#table_community_cards_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#table_community_cards_container img {
+  height: 6em;
+}
+
+/* Player layout */
+
+.player_container {
+  position: absolute;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 0;
+  height: 0;
+}
+
+.player_hole_cards_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.player_hole_cards_container img {
+  height: 6em;
+}
+
+.player_info_container {
   position: relative;
   z-index: 1;
+
   width: 10em;
   padding: 1em;
+
   border-radius: 1em;
+
   background: rgba(0, 0, 0, 0.5);
   text-align: center;
 }
 
-.player > div > :nth-child(2) > :nth-child(1) {
+.player_name {
   white-space: nowrap;
   overflow: scroll;
 }
 
-.player > div > :nth-child(2) > :nth-child(3) {
+.player_chips {
   color: lightgreen;
 }
 
-.player > div > :nth-child(2) > :nth-child(6) {
+.player_turn {
   color: yellow;
 }
 
-.player img, #table_central > :nth-child(2) img {
-  height: 6em;
-}
+/* Player bet info */
 
-.player_bet, #table_central > :first-child {
+.player_bet_info {
+  position: absolute;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  flex-direction: row;
   align-items: center;
 }
 
-#table_central > :first-child {
-  margin-bottom: 1em;
-}
-
-.player_bet img, #table_central > :first-child img {
+.player_bet_info img {
   height: 3em;
 }
 
-.player_bet p, #table_central p {
+.player_bet_info p {
   padding: 0 1em;
+
   border-radius: 9999px;
+
   background: rgba(0, 0, 0, 0.5);
 }
 
-#table > :nth-child(2) {
+/* Controls */
+
+#controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+
   width: 100%;
   padding: 1em;
+
   border-radius: 1em;
-  display: flex;
-  justify-content: space-evenly;
-  background-color: rgba(0, 0, 0, 0.5);
+
+  background-color: white;
 }
 
-#table > :nth-child(2) > :nth-child(4) {
-  gap: 1em;
-}
-
-#table button {
-  font-size: 1em;
-  padding: 1em;
+#controls button {
   align-self: stretch;
+
+  padding: 1em;
+
+  border: none;
+
   background-color: red;
   color: white;
-  border: none;
+
+  font-size: 1em;
 }
 
-#table button:active {
+#controls button:active {
   background-color: darkred;
 }
 
-#table button:disabled {
+#controls button:disabled {
   opacity: 0.5;
   pointer-events: none;
   cursor: not-allowed;
 }
 
-#table input[type="text"] {
-  font-size: 1em;
-  width: 5em;
-  padding: 1em;
-  outline: none;
-  border: none;
+/* Raise-to controls */
+
+#raise_to_controls {
+  display: flex;
+  flex-direction: row;
+
+  gap: 1em;
 }
 
-#table input[type="range"] {
+#raise_to_controls input[type="text"] {
+  width: 5em;
+  padding: 1em;
+
+  border: 1px solid gray;
+  outline: none;
+
+  font-size: 1em;
+}
+
+#raise_to_controls input[type="text"]:focus {
+  border-color: black;
+  
+  transition: border-color 0.2s ease;
+}
+  
+#raise_to_controls input[type="range"] {
   width: 5em;
 }

@@ -3,6 +3,8 @@
   src: url("/poker.otf") format("opentype");
 }
 
+/* Join/create layout */
+
 #join_or_create {
   position: absolute;
   top: 50%;
@@ -10,49 +12,71 @@
   transform: translate(-50%, -50%);
 }
 
+/* Heading */
+
 #join_or_create h1 {
-  font-family: "Poker";
   color: white;
+
+  font-family: "Poker";
   text-align: center;
 }
+
+/* Form container */
+
+#join_or_create div {
+  display: inline-block;
+
+  padding-left: 1em;
+  padding-right: 1em;
+
+  background-color: white;
+
+  font-family: sans-serif;
+}
+
+/* Text */
 
 #join_or_create p {
   text-align: center;
 }
 
-#join_or_create div {
-  display: inline-block;
-  padding-left: 1em;
-  padding-right: 1em;
-  font-family: sans-serif;
-  background-color: white;
-}
+/* Inputs */
 
 #join_or_create input[type="text"] {
   display: block;
+
   padding: 1em;
   margin-bottom: 1em;
-  outline: none;
+
   border: 1px solid gray;
+  outline: none;
+
   text-align: center;
 }
 
 #join_or_create input[type="text"]:focus {
   border-color: black;
+
   transition: border-color 0.2s ease;
 }
+
+/* Labels */
 
 #join_or_create label {
   padding-right: 1em;
 }
 
+/* Buttons */
+
 #join_or_create button {
   width: 100%;
   padding: 1em;
   margin-bottom: 1em;
+
+  border: none;
+
   background-color: red;
   color: white;
-  border: none;
 }
 
 #join_or_create button:active {

@@ -29,11 +29,11 @@ function Controls({ public_state, socket }) {
   }, [minimum_raise_to]);
 
   return ( 
-    <div> 
+    <div id="controls"> 
       <button onClick={() => socket.current.emit("fold")} disabled={is_fold_disabled}>Fold</button> 
       <button onClick={() => socket.current.emit("check")} disabled={is_check_disabled}>Check</button> 
       <button onClick={() => socket.current.emit("call")} disabled={is_call_disabled}>Call ${Math.min(amount_owed, player.chips)}</button> 
-      <div> 
+      <div id="raise_to_controls"> 
         <div> 
           <div> 
             <input type="text" onChange={e => { 

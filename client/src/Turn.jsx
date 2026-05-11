@@ -16,7 +16,7 @@ function Turn({ public_state, index }) {
   }, [is_turn, remaining_time]);
 
   if (is_turn) {
-    return <p>Turn ({(remaining_time / 1000).toFixed(1)}s)</p>;
+    return <p className="player_turn">Turn ({(remaining_time / 1000).toFixed(1)}s)</p>;
   }
   return <></>;
 }
