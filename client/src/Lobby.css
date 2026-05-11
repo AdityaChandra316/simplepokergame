@@ -87,9 +87,7 @@
   padding: 1em;
 }
 
-/* Lobby buttons */
-
-#lobby button {
+#lobby_footer button {
   padding: 1em;
 
   border: none;
@@ -98,11 +96,11 @@
   color: white;
 }
 
-#lobby button:active {
+#lobby_footer button:active {
   background-color: darkred;
 }
 
-#lobby button:disabled {
+#lobby_footer button:disabled {
   opacity: 0.5;
   pointer-events: none;
   cursor: not-allowed;
