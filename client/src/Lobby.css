@@ -41,8 +41,7 @@
 #lobby_header {
   display: flex;
 
-  padding-top: 1em;
-  padding-bottom: 1em;
+  padding: 1em 0;
 
   background-color: red;
   color: white;
@@ -74,8 +73,7 @@
 }
 
 #lobby_table_container td {
-  padding-top: 1em;
-  padding-bottom: 1em;
+  padding: 1em 0;
 
   text-align: center;
 }
