@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Poker";
+  src: url("/poker.otf") format("opentype");
+}
+
 * {
   box-sizing: border-box;
 }
