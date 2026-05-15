@@ -5,12 +5,13 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  display: flow-root;
 }
 
 /* Heading */
 
 #join_or_create h1 {
+  margin-top: 0;
+  
   color: white;
 
   font-family: "Poker";
