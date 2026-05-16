@@ -30,8 +30,8 @@ function ScoreStraight(rank_occurences) {
 
 function ScoreHand(hand) {
   const rank_occurences = {};
-  const suits = new Set()
   const ranks = [];
+  const suits = new Set()
   for (const card of hand) {
     const suit = card % 4;
     const rank = (card - suit) / 4;
@@ -40,8 +40,8 @@ function ScoreHand(hand) {
     } else {
       rank_occurences[rank] = 1;
     }
-    suits.add(suit);
     ranks.push(rank);
+    suits.add(suit);
   }
   ranks.sort((a, b) => a - b);
   const rank_occurences_keys = Object.keys(rank_occurences).map(Number);
