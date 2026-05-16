@@ -29,30 +29,25 @@ function ScoreStraight(rank_occurences) {
 }
 
 function ScoreHand(hand) {
-  const suit_occurences = {};
   const rank_occurences = {};
+  const suits = new Set()
   const ranks = [];
   for (const card of hand) {
     const suit = card % 4;
     const rank = (card - suit) / 4;
-    if (suit_occurences[suit]) {
-      suit_occurences[suit]++;
-    } else {
-      suit_occurences[suit] = 1;
-    }
     if (rank_occurences[rank]) {
       rank_occurences[rank]++;
     } else {
       rank_occurences[rank] = 1;
     }
+    suits.add(suit);
     ranks.push(rank);
   }
   ranks.sort((a, b) => a - b);
-  const suit_occurences_keys = Object.keys(suit_occurences);
   const rank_occurences_keys = Object.keys(rank_occurences).map(Number);
   const rank_occurences_values = Object.values(rank_occurences);
   // Straight and Royal Flush
-  if (suit_occurences_keys.length == 1) {
+  if (suits.size == 1) {
     const straight_score = ScoreStraight(rank_occurences);
     if (straight_score != -1) {
       return 2 * (13 ** 5) + (13 ** 4) + 2 * (13 ** 3) + 2 * (13 ** 2) + 13 + straight_score; // Max tie breaker is 13.
@@ -71,7 +66,7 @@ function ScoreHand(hand) {
     return 2 * (13 ** 5) + (13 ** 4) + 2 * (13 ** 3) + 13 + 13 * rank_occurences_keys[tri_index] + rank_occurences_keys[bi_index]; // Max tie breaker is 13 ** 2.
   }
   // Flush
-  if (suit_occurences_keys.length == 1) {
+  if (suits.size == 1) {
     return (13 ** 5) + (13 ** 4) + 2 * (13 ** 3) + 13 + (13 ** 4) * ranks[4] + (13 ** 3) * ranks[3] + (13 ** 2) * ranks[2] + (13 ** 1) * ranks[1] + ranks[0]; // Max tie breaker is 13 ** 5
   }
   // Straight
