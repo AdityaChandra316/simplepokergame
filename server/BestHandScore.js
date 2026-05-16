@@ -60,9 +60,9 @@ function ScoreHand(hand) {
     return 2 * (13 ** 5) + (13 ** 4) + 2 * (13 ** 3) + (13 ** 2) + 13 + 13 * rank_occurences_keys[quad_index] + rank_occurences_keys[kicker_index]; // Max tie breaker is 13 ** 2.
   }
   // Full House
-  const bi_index = rank_occurences_values.indexOf(2);
   const tri_index = rank_occurences_values.indexOf(3);
-  if (bi_index != -1 && tri_index != -1) {
+  const bi_index = rank_occurences_values.indexOf(2);
+  if (tri_index != -1 && bi_index != -1) {
     return 2 * (13 ** 5) + (13 ** 4) + 2 * (13 ** 3) + 13 + 13 * rank_occurences_keys[tri_index] + rank_occurences_keys[bi_index]; // Max tie breaker is 13 ** 2.
   }
   // Flush
