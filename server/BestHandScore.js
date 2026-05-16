@@ -46,12 +46,10 @@ function ScoreHand(hand) {
   ranks.sort((a, b) => a - b);
   const rank_occurences_keys = Object.keys(rank_occurences).map(Number);
   const rank_occurences_values = Object.values(rank_occurences);
+  const straight_score = ScoreStraight(rank_occurences);
   // Straight and Royal Flush
-  if (suits.size == 1) {
-    const straight_score = ScoreStraight(rank_occurences);
-    if (straight_score != -1) {
-      return 2 * (13 ** 5) + (13 ** 4) + 2 * (13 ** 3) + 2 * (13 ** 2) + 13 + straight_score; // Max tie breaker is 13.
-    }
+  if (suits.size == 1 && straight_score != -1) {
+    return 2 * (13 ** 5) + (13 ** 4) + 2 * (13 ** 3) + 2 * (13 ** 2) + 13 + straight_score; // Max tie breaker is 13.
   }
   // Four of a Kind
   const quad_index = rank_occurences_values.indexOf(4);
@@ -70,7 +68,6 @@ function ScoreHand(hand) {
     return (13 ** 5) + (13 ** 4) + 2 * (13 ** 3) + 13 + (13 ** 4) * ranks[4] + (13 ** 3) * ranks[3] + (13 ** 2) * ranks[2] + (13 ** 1) * ranks[1] + ranks[0]; // Max tie breaker is 13 ** 5
   }
   // Straight
-  const straight_score = ScoreStraight(rank_occurences);
   if (straight_score != -1) {
     return (13 ** 5) + (13 ** 4) + 2 * (13 ** 3) + straight_score; // Max tie breaker is 13
   }
