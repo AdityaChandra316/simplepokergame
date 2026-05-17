@@ -119,7 +119,7 @@
 
 .player_name {
   white-space: nowrap;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .player_chips {
