@@ -369,7 +369,7 @@ class PokerGame extends EventEmitter {
   }
   #NoValidPlayersExist() {
     for (const player of this.players) {
-      if (player.chips && !player.folded && !player.eliminated) {
+      if (player.chips && !player.folded_this_hand && !player.eliminated) {
         return false;
       }
     }
