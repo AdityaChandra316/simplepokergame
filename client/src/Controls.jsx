@@ -1,4 +1,4 @@
-import { useState } from "react"; 
+import { useEffect, useState } from "react"; 
 
 function Controls({ public_state, socket }) { 
   const [raise_to, set_raise_to] = useState(0); 
@@ -23,6 +23,10 @@ function Controls({ public_state, socket }) {
     raise_to > maximum_raise_to || 
     (player.last_action_this_round && public_state.minimum_call_amount_this_round - player.minimum_call_amount_following_last_act < public_state.minimum_raise_amount_this_round) 
   ); 
+
+  useEffect(() => { 
+    set_raise_to(minimum_raise_to);
+  }, [minimum_raise_to]);
 
   return ( 
     <div id="controls"> 
