@@ -422,7 +422,7 @@ class PokerGame extends EventEmitter {
     const best_hand_scores = {}
     for (let i = 0; i < this.players.length; i++) {
       const player = this.players[i];
-      if (!player.folded_this_hand && !player.eliminated) {
+      if (!player.eliminated && !player.folded_this_hand) {
         best_hand_scores[i] = BestHandScore(this.community_cards, player.hole_cards);
       }
     }
