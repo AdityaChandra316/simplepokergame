@@ -337,10 +337,7 @@ class PokerGame extends EventEmitter {
       if (!player.chips || player.eliminated || player.folded_this_hand) {
         continue;
       }
-      if (!player.last_action_this_round) {
-        return false;
-      }
-      if (player.bet_amount_this_round != this.minimum_call_amount_this_round) {
+      if (!player.last_action_this_round || player.bet_amount_this_round != this.minimum_call_amount_this_round) {
         return false;
       }
     }
