@@ -115,18 +115,19 @@ class PokerGame extends EventEmitter {
     this.emit("state_update");
   }
   DisconnectPlayer(player_id) {
-    if (player_id in this.player_id_to_index) {
-      const player_index = this.player_id_to_index[player_id];
-      const player_at_index = this.players[player_index];
-      const old_player_number_of_connections = player_at_index.number_of_connections;
-      player_at_index.number_of_connections = Math.max(0, old_player_number_of_connections - 1);
-      if (old_player_number_of_connections && !player_at_index.number_of_connections) {
-        this.number_of_connected_players--;
-        this.emit("state_update");
-      }
+    if (!(player_id in this.player_id_to_index)) {
+      return;
+    }
+    const player_index = this.player_id_to_index[player_id];
+    const player_at_index = this.players[player_index];
+    const old_player_number_of_connections = player_at_index.number_of_connections;
+    player_at_index.number_of_connections = Math.max(0, old_player_number_of_connections - 1);
+    if (old_player_number_of_connections && !player_at_index.number_of_connections) {
+      this.number_of_connected_players--;
       if (!this.number_of_connected_players) {
         this.delete_poker_game_timeout = setTimeout(() => this.emit("delete_poker_game"), 10 * 60 * 1000);
-      }
+      }  
+      this.emit("state_update");
     }
   }
   RequestStartGame(player_id) {
