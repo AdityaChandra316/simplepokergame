@@ -237,12 +237,9 @@ class PokerGame extends EventEmitter {
       // If I can't meet the minimum raise amount, I have to go all-in. If I still am choosing not to go all-in, that isn't allowed.
       if (desired_raise_amount < maximum_raise_amount) {
         return; 
-      }
-    } else {
-      // If I can meet the minimum raise amount, but I am still choosing not to, that isn't allowed.
-      if (desired_raise_amount < this.minimum_raise_amount_this_round) {
-        return;
-      }
+      } // If I can meet the minimum raise amount, but I am still choosing not to, that isn't allowed.
+    } else if (desired_raise_amount < this.minimum_raise_amount_this_round) {
+      return;
     }
     player.minimum_call_amount_following_last_act = new_bet_amount;
     const amount_owed = new_bet_amount - player.bet_amount_this_round;
