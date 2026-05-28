@@ -1,9 +1,10 @@
-const express = require("express");
 const cors = require("cors");
-const path = require("path");
+const crypto = require("crypto");
+const express = require("express");
 const http = require("http");
-const { Server } = require("socket.io");
+const path = require("path");
 const PokerGame = require("./PokerGame");
+const { Server } = require("socket.io");
 
 const app = express();
 const server = http.createServer(app);
@@ -26,7 +27,7 @@ const io = new Server(server, {
 function generate_room() {
   let room = "";
   for (let i = 0; i < 6; i++) {
-    room += Math.floor(Math.random() * 10);
+    room += crypto.randomInt(10);
   }
   return room;
 }
