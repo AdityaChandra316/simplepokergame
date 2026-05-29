@@ -1,12 +1,12 @@
 // 2, 3, 4, 5, 6, 7, 8, 9, 10, Jack (J), Queen (Q), King (K), Ace (A)
-function ScoreStraight(rank_occurences) {
-  if (rank_occurences[12] && rank_occurences[0] && rank_occurences[1] && rank_occurences[2] && rank_occurences[3]) {
+function ScoreStraight(rank_occurrences) {
+  if (rank_occurrences[12] && rank_occurrences[0] && rank_occurrences[1] && rank_occurrences[2] && rank_occurrences[3]) {
     return 3;
   }
   let ranks_found = 0;
   for (let rank_offset = 0; rank_offset < 5; rank_offset++) {
     const rank = rank_offset;
-    if (rank_occurences[rank]) {
+    if (rank_occurrences[rank]) {
       ranks_found++;
     }
   }
@@ -15,10 +15,10 @@ function ScoreStraight(rank_occurences) {
   }
   for (let starting_rank = 1; starting_rank < 9; starting_rank++) {
     const ending_rank = starting_rank + 4;
-    if (rank_occurences[starting_rank - 1]) {
+    if (rank_occurrences[starting_rank - 1]) {
       ranks_found--;
     }
-    if (rank_occurences[ending_rank]) {
+    if (rank_occurrences[ending_rank]) {
       ranks_found++;
     }
     if (ranks_found == 5) {
@@ -29,39 +29,39 @@ function ScoreStraight(rank_occurences) {
 }
 
 function ScoreHand(hand) {
-  const rank_occurences = {};
+  const rank_occurrences = {};
   const ranks = [];
   const suits = new Set()
   for (const card of hand) {
     const suit = card % 4;
     const rank = (card - suit) / 4;
-    if (rank_occurences[rank]) {
-      rank_occurences[rank]++;
+    if (rank_occurrences[rank]) {
+      rank_occurrences[rank]++;
     } else {
-      rank_occurences[rank] = 1;
+      rank_occurrences[rank] = 1;
     }
     ranks.push(rank);
     suits.add(suit);
   }
   ranks.sort((a, b) => a - b);
-  const rank_occurences_keys = Object.keys(rank_occurences).map(Number);
-  const rank_occurences_values = Object.values(rank_occurences);
-  const straight_score = ScoreStraight(rank_occurences);
+  const rank_occurrences_keys = Object.keys(rank_occurrences).map(Number);
+  const rank_occurrences_values = Object.values(rank_occurrences);
+  const straight_score = ScoreStraight(rank_occurrences);
   // Straight and Royal Flush
   if (suits.size == 1 && straight_score != -1) {
     return 2 * (13 ** 5) + (13 ** 4) + 2 * (13 ** 3) + 2 * (13 ** 2) + 13 + straight_score; // Max tie breaker is 13.
   }
   // Four of a Kind
-  const quad_index = rank_occurences_values.indexOf(4);
-  const kicker_index = rank_occurences_values.indexOf(1);
+  const quad_index = rank_occurrences_values.indexOf(4);
+  const kicker_index = rank_occurrences_values.indexOf(1);
   if (quad_index != -1) {
-    return 2 * (13 ** 5) + (13 ** 4) + 2 * (13 ** 3) + (13 ** 2) + 13 + 13 * rank_occurences_keys[quad_index] + rank_occurences_keys[kicker_index]; // Max tie breaker is 13 ** 2.
+    return 2 * (13 ** 5) + (13 ** 4) + 2 * (13 ** 3) + (13 ** 2) + 13 + 13 * rank_occurrences_keys[quad_index] + rank_occurrences_keys[kicker_index]; // Max tie breaker is 13 ** 2.
   }
   // Full House
-  const tri_index = rank_occurences_values.indexOf(3);
-  const bi_index = rank_occurences_values.indexOf(2);
+  const tri_index = rank_occurrences_values.indexOf(3);
+  const bi_index = rank_occurrences_values.indexOf(2);
   if (tri_index != -1 && bi_index != -1) {
-    return 2 * (13 ** 5) + (13 ** 4) + 2 * (13 ** 3) + 13 + 13 * rank_occurences_keys[tri_index] + rank_occurences_keys[bi_index]; // Max tie breaker is 13 ** 2.
+    return 2 * (13 ** 5) + (13 ** 4) + 2 * (13 ** 3) + 13 + 13 * rank_occurrences_keys[tri_index] + rank_occurrences_keys[bi_index]; // Max tie breaker is 13 ** 2.
   }
   // Flush
   if (suits.size == 1) {
@@ -72,22 +72,22 @@ function ScoreHand(hand) {
     return (13 ** 5) + (13 ** 4) + 2 * (13 ** 3) + straight_score; // Max tie breaker is 13
   }
   // Three of a Kind
-  const second_kicker_index = rank_occurences_values.indexOf(1, kicker_index + 1);
+  const second_kicker_index = rank_occurrences_values.indexOf(1, kicker_index + 1);
   if (tri_index != -1) {
-    const kicker_ranks = [rank_occurences_keys[kicker_index], rank_occurences_keys[second_kicker_index]].sort((a, b) => a - b);
-    return (13 ** 5) + (13 ** 4) + (13 ** 3) + (13 ** 2) * rank_occurences_keys[tri_index] + 13 * kicker_ranks[1] + kicker_ranks[0]; // Max tie breaker is 13 ** 3
+    const kicker_ranks = [rank_occurrences_keys[kicker_index], rank_occurrences_keys[second_kicker_index]].sort((a, b) => a - b);
+    return (13 ** 5) + (13 ** 4) + (13 ** 3) + (13 ** 2) * rank_occurrences_keys[tri_index] + 13 * kicker_ranks[1] + kicker_ranks[0]; // Max tie breaker is 13 ** 3
   }
   // Two Pair
-  const second_bi_index = rank_occurences_values.indexOf(2, bi_index + 1);
+  const second_bi_index = rank_occurrences_values.indexOf(2, bi_index + 1);
   if (bi_index != -1 && second_bi_index != -1) {
-    const pair_ranks = [rank_occurences_keys[bi_index], rank_occurences_keys[second_bi_index]].sort((a, b) => a - b);
-    return (13 ** 5) + (13 ** 4) + (13 ** 2) * pair_ranks[1] + 13 * pair_ranks[0] + rank_occurences_keys[kicker_index]; // Max tie breaker is 13 ** 3
+    const pair_ranks = [rank_occurrences_keys[bi_index], rank_occurrences_keys[second_bi_index]].sort((a, b) => a - b);
+    return (13 ** 5) + (13 ** 4) + (13 ** 2) * pair_ranks[1] + 13 * pair_ranks[0] + rank_occurrences_keys[kicker_index]; // Max tie breaker is 13 ** 3
   }
   // One Pair
-  const third_kicker_index = rank_occurences_values.indexOf(1, second_kicker_index + 1);
+  const third_kicker_index = rank_occurrences_values.indexOf(1, second_kicker_index + 1);
   if (bi_index != -1) {
-    const kicker_ranks = [rank_occurences_keys[kicker_index], rank_occurences_keys[second_kicker_index], rank_occurences_keys[third_kicker_index]].sort((a, b) => a - b);
-    return (13 ** 5) + (13 ** 3) * rank_occurences_keys[bi_index] + (13 ** 2) * kicker_ranks[2] + 13 * kicker_ranks[1] + kicker_ranks[0];  // Max tie breaker is 13 ** 4
+    const kicker_ranks = [rank_occurrences_keys[kicker_index], rank_occurrences_keys[second_kicker_index], rank_occurrences_keys[third_kicker_index]].sort((a, b) => a - b);
+    return (13 ** 5) + (13 ** 3) * rank_occurrences_keys[bi_index] + (13 ** 2) * kicker_ranks[2] + 13 * kicker_ranks[1] + kicker_ranks[0];  // Max tie breaker is 13 ** 4
   }
   // High Card
   return (13 ** 4) * ranks[4] + (13 ** 3) * ranks[3] + (13 ** 2) * ranks[2] + (13 ** 1) * ranks[1] + ranks[0]; // Max tie breaker is 13 ** 5
