@@ -45,8 +45,8 @@ class PokerGame extends EventEmitter {
     this.big_blinds;
     this.big_blind_interval;
     this.big_blind;
-    this.minimum_call_amount_this_round = this.big_blind;
-    this.minimum_raise_amount_this_round = this.big_blind;
+    this.minimum_call_amount_this_round;
+    this.minimum_raise_amount_this_round;
     this.total_pot = 0;
 
     // Timing.
@@ -165,6 +165,8 @@ class PokerGame extends EventEmitter {
         this.big_blind_interval = 360000;
       }
       this.big_blind = this.big_blinds[0];
+      this.minimum_call_amount_this_round = this.big_blind;
+      this.minimum_raise_amount_this_round = this.big_blind;  
       
       let small_blind_index;
       if (this.number_of_uneliminated_players == 2) {
