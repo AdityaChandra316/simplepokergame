@@ -7,11 +7,7 @@ const FLOP_ROUND = 1;
 const TURN_ROUND = 2;
 const RIVER_ROUND = 3;
 
-const STARTING_CHIPS = 1500;
-
-const BIG_BLINDS = [20, 30, 50, 100, 150, 200, 300, 400, 600, 1000, 1500, 2000];
-
-const BLIND_INTERVAL = 5 * 60 * 1000;
+const STARTING_CHIPS = 10000;
 
 const FOLD = 1;
 const CHECK = 2;
@@ -46,7 +42,9 @@ class PokerGame extends EventEmitter {
     this.is_showing_down = false;
 
     // Betting state.
-    this.big_blind = BIG_BLINDS[0];
+    this.big_blinds;
+    this.big_blind_interval;
+    this.big_blind;
     this.minimum_call_amount_this_round = this.big_blind;
     this.minimum_raise_amount_this_round = this.big_blind;
     this.total_pot = 0;
@@ -55,7 +53,7 @@ class PokerGame extends EventEmitter {
     this.start_time;
     this.forced_action_timeout;
     this.turn_start_time;
-    this.delete_poker_game_timeout = setTimeout(() => this.emit("delete_poker_game"), 10 * 60 * 1000);
+    this.delete_poker_game_timeout = setTimeout(() => this.emit("delete_poker_game"), 600000);
     this.start_game_timeout;
   }
   ConnectPlayer(player_id, name) {
@@ -153,6 +151,21 @@ class PokerGame extends EventEmitter {
     // Everyone has requested to start the game and so we can begin.
 
     this.start_game_timeout = setTimeout(() => {
+      if (this.players.length == 2) {
+        this.big_blinds = [100, 150, 250, 400, 600, 1000, 1500, 2500, 4000, 6000];
+        this.big_blind_interval = 180000;
+      } else if (this.players.length <= 4) {
+        this.big_blinds = [100, 150, 200, 300, 400, 600, 1000, 1500, 2500, 4000, 6000];
+        this.big_blind_interval = 240000;
+      } else if (this.players.length <= 6) {
+        this.big_blinds = [100, 150, 200, 300, 400, 600, 800, 1200, 1600, 2400, 3200, 5000, 8000];
+        this.big_blind_interval = 300000;
+      } else {
+        this.big_blinds = [50, 100, 150, 200, 300, 400, 600, 800, 1200, 1600, 2400, 3200, 5000, 8000, 12000];
+        this.big_blind_interval = 360000;
+      }
+      this.big_blind = this.big_blinds[0];
+      
       let small_blind_index;
       if (this.number_of_uneliminated_players == 2) {
         small_blind_index = 0;
@@ -541,7 +554,7 @@ class PokerGame extends EventEmitter {
     this.is_showing_down = false;
 
     // Betting state.
-    this.big_blind = BIG_BLINDS[Math.min(Math.floor((Date.now() - this.start_time) / BLIND_INTERVAL), BIG_BLINDS.length - 1)];
+    this.big_blind = this.big_blinds[Math.min(Math.floor((Date.now() - this.start_time) / this.big_blind_interval), this.big_blinds.length - 1)];
     this.minimum_call_amount_this_round = this.big_blind;
     this.minimum_raise_amount_this_round = this.big_blind;
     this.total_pot = 0;
@@ -607,8 +620,14 @@ class PokerGame extends EventEmitter {
       // If everyone is eliminated except a singular player, we have found a winner and can end the game.
       if (this.game_winner_index != -1) {
         return;
-      } 
-      setTimeout(() => this.#GoToNextHand(), 6000);
+      }
+      let delay_to_go_to_next_hand = 3000;
+      for (const player of this.players) {
+        if (!player.eliminated && !player.folded_this_hand) {
+          delay_to_go_to_next_hand += 1000;
+        }
+      }
+      setTimeout(() => this.#GoToNextHand(), delay_to_go_to_next_hand);
       return;
     }
     if (this.round_ended) {
