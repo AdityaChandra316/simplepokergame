@@ -615,6 +615,13 @@ class PokerGame extends EventEmitter {
       while (this.community_cards.length < 5) {
         this.community_cards.push(this.deck.GetRandomCard());
       }
+      let number_of_showdown_players = 0;
+      for (const player of this.players) {
+        if (!player.eliminated && !player.folded_this_hand) {
+          number_of_showdown_players++;
+        }
+      }
+      const delay_to_go_to_next_hand = 3000 + 1000 * number_of_showdown_players;
       const pots = this.#CalculatePots();
       this.#AwardShowDownPots(pots);
       this.#EliminatePlayers();
@@ -622,12 +629,6 @@ class PokerGame extends EventEmitter {
       // If everyone is eliminated except a singular player, we have found a winner and can end the game.
       if (this.game_winner_index != -1) {
         return;
-      }
-      let delay_to_go_to_next_hand = 3000;
-      for (const player of this.players) {
-        if (!player.eliminated && !player.folded_this_hand) {
-          delay_to_go_to_next_hand += 1000;
-        }
       }
       setTimeout(() => this.#GoToNextHand(), delay_to_go_to_next_hand);
       return;
