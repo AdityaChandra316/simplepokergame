@@ -203,7 +203,7 @@
 }
 
 #raise_to_controls input[type="text"] {
-  width: 6em;
+  width: 5em;
   padding: 1em;
 
   border: 1px solid gray;
@@ -219,5 +219,5 @@
 }
   
 #raise_to_controls input[type="range"] {
-  width: 6em;
+  width: 5em;
 }
