@@ -123,7 +123,7 @@ class PokerGame extends EventEmitter {
     if (old_player_number_of_connections && !player_at_index.number_of_connections) {
       this.number_of_connected_players--;
       if (!this.number_of_connected_players) {
-        this.delete_poker_game_timeout = setTimeout(() => this.emit("delete_poker_game"), 10 * 60 * 1000);
+        this.delete_poker_game_timeout = setTimeout(() => this.emit("delete_poker_game"), 600000);
       }  
       this.emit("state_update");
     }
