@@ -10,18 +10,18 @@ const RIVER_ROUND = 3;
 const STARTING_CHIPS = 3000;
 
 const BIG_BLINDS = [
-  [20, 30, 40, 60, 80, 120, 160, 240, 320, 400],
-  [20, 30, 50, 70, 100, 150, 220, 300, 450, 600],
-  [20, 40, 60, 80, 120, 180, 250, 350, 500, 800],
-  [20, 40, 60, 100, 150, 250, 400, 600, 800, 1000],
-  [30, 50, 80, 120, 200, 300, 450, 700, 900, 1200],
-  [30, 60, 100, 150, 220, 350, 520, 800, 1100, 1400],
-  [40, 70, 120, 180, 250, 400, 600, 900, 1200, 1600],
-  [40, 80, 130, 200, 300, 450, 700, 1000, 1350, 1800],
-  [50, 100, 150, 250, 350, 500, 750, 1100, 1500, 2000],
+  [40, 80, 120, 160, 200, 240, 320, 480, 640, 960, 1280],
+  [40, 84, 132, 184, 240, 300, 416, 648, 896, 1392, 1920],
+  [40, 88, 144, 208, 280, 360, 512, 816, 1152, 1824, 2560],
+  [40, 92, 156, 232, 320, 420, 608, 984, 1408, 2256, 3200],
+  [40, 96, 168, 256, 360, 480, 704, 1152, 1664, 2688, 3840],
+  [40, 100, 180, 280, 400, 540, 800, 1320, 1920, 3120, 4480],
+  [40, 104, 192, 304, 440, 600, 896, 1488, 2176, 3552, 5120],
+  [40, 108, 204, 328, 480, 660, 992, 1656, 2432, 3984, 5760],
+  [40, 112, 216, 352, 520, 720, 1088, 1824, 2688, 4416, 6400]
 ];
-const BIG_BLIND_INTERVALS = [180000, 210000, 240000, 270000, 300000, 330000, 360000, 390000, 420000];
-const DELAYS_TO_GO_TO_NEXT_HAND = [6000, 7000, 8000, 9000, 10000, 11000, 12000, 13000, 14000];
+const BIG_BLIND_INTERVALS = [300000, 450000, 600000, 750000, 900000, 1050000, 1200000, 1350000, 1500000];
+const DELAYS_TO_GO_TO_NEXT_HAND = [4000, 6000, 8000, 10000, 12000, 14000, 16000, 18000, 20000];
 
 const FOLD = 1;
 const CHECK = 2;
@@ -187,7 +187,7 @@ class PokerGame extends EventEmitter {
       this.#CommitChips(this.player_index, this.big_blind);
 
       this.#GoToNextState();  
-    }, 5000);
+    }, 3000);
   }
   Fold(player_id) {
     if (!this.game_started || this.game_winner_index != -1 || this.round_ended || this.hand_ended) {
@@ -479,9 +479,9 @@ class PokerGame extends EventEmitter {
     const amount_owed = this.minimum_call_amount_this_round - player.bet_amount_this_round;
 
     if (amount_owed) {
-      this.forced_action_timeout = setTimeout(() => this.Fold(player.player_id), 20000);
+      this.forced_action_timeout = setTimeout(() => this.Fold(player.player_id), 15000);
     } else {
-      this.forced_action_timeout = setTimeout(() => this.Check(player.player_id), 20000);
+      this.forced_action_timeout = setTimeout(() => this.Check(player.player_id), 15000);
     }
 
     this.turn_start_time = Date.now();
@@ -602,7 +602,7 @@ class PokerGame extends EventEmitter {
       if (this.game_winner_index != -1) {
         return;
       }
-      setTimeout(() => this.#GoToNextHand(), 3000);
+      setTimeout(() => this.#GoToNextHand(), 2000);
       return;
     }
     this.round_ended = this.#HasRoundEnded();
