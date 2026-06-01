@@ -66,8 +66,9 @@ class PokerGame extends EventEmitter {
     this.start_time;
     this.forced_action_timeout;
     this.turn_start_time;
-    this.delete_poker_game_timeout = setTimeout(() => this.emit("delete_poker_game"), 600000);
+    this.delete_game_timeout = setTimeout(() => this.emit("delete_poker_game"), 600000);
     this.start_game_timeout;
+    this.state_transition_timeout;
   }
   ConnectPlayer(player_id, name) {
     if (player_id in this.player_id_to_index) {
@@ -81,7 +82,7 @@ class PokerGame extends EventEmitter {
       } else {
         this.emit("individual_state_update", player_id);
       }
-      clearTimeout(this.delete_poker_game_timeout);
+      clearTimeout(this.delete_game_timeout);
       return;
     }
     if (this.game_started || this.players.length >= 10 || !name || !name.length) {
@@ -121,7 +122,7 @@ class PokerGame extends EventEmitter {
     this.number_of_connected_players++;
     this.number_of_uneliminated_players++;
     this.player_id_to_index[player_id] = player_index;
-    clearTimeout(this.delete_poker_game_timeout);
+    clearTimeout(this.delete_game_timeout);
     clearTimeout(this.start_game_timeout);
     this.emit("state_update");
   }
@@ -136,7 +137,7 @@ class PokerGame extends EventEmitter {
     if (old_player_number_of_connections && !player_at_index.number_of_connections) {
       this.number_of_connected_players--;
       if (!this.number_of_connected_players) {
-        this.delete_poker_game_timeout = setTimeout(() => this.emit("delete_poker_game"), 600000);
+        this.delete_game_timeout = setTimeout(() => this.emit("delete_poker_game"), 600000);
       }  
       this.emit("state_update");
     }
@@ -602,7 +603,7 @@ class PokerGame extends EventEmitter {
       if (this.game_winner_index != -1) {
         return;
       }
-      setTimeout(() => this.#GoToNextHand(), 2000);
+      this.state_transition_timeout = setTimeout(() => this.#GoToNextHand(), 2000);
       return;
     }
     this.round_ended = this.#HasRoundEnded();
@@ -632,12 +633,12 @@ class PokerGame extends EventEmitter {
       if (this.game_winner_index != -1) {
         return;
       }
-      setTimeout(() => this.#GoToNextHand(), DELAYS_TO_GO_TO_NEXT_HAND[number_of_showdown_players - 2]);
+      this.state_transition_timeout = setTimeout(() => this.#GoToNextHand(), DELAYS_TO_GO_TO_NEXT_HAND[number_of_showdown_players - 2]);
       return;
     }
     if (this.round_ended) {
       // If the round has ended without the hand ending.
-      setTimeout(() => this.#GoToNextRound(), 2000);
+      this.state_transition_timeout = setTimeout(() => this.#GoToNextRound(), 2000);
       this.emit("state_update");
       return;
     } 
