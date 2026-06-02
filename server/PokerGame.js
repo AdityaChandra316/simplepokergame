@@ -64,10 +64,10 @@ class PokerGame extends EventEmitter {
 
     // Timing.
     this.start_time;
-    this.forced_action_timeout;
     this.turn_start_time;
     this.delete_game_timeout = setTimeout(() => this.emit("delete_poker_game"), 600000);
     this.start_game_timeout;
+    this.forced_action_timeout;
     this.state_transition_timeout;
   }
   ConnectPlayer(player_id, name) {
@@ -116,7 +116,7 @@ class PokerGame extends EventEmitter {
       // Current betting-round state.
       bet_amount_this_round: 0,
       last_action_this_round: 0,
-      last_action_amount_this_round: 0, // Amount displayed after action (only for call and raise)
+      last_action_amount_this_round: 0, // Amount displayed after action (only for call and raise).
       minimum_call_amount_following_last_act: 0,
     });
     this.number_of_connected_players++;
@@ -323,6 +323,13 @@ class PokerGame extends EventEmitter {
 
       turn_start_time: this.turn_start_time,
     }
+  }
+  Destroy() {
+    clearTimeout(this.delete_game_timeout);
+    clearTimeout(this.start_game_timeout);
+    clearTimeout(this.forced_action_timeout);
+    clearTimeout(this.state_transition_timeout);
+    this.removeAllListeners();
   }
   #GetValidPlayerIndex(starting_index) {
     starting_index %= this.players.length;

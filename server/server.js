@@ -52,11 +52,7 @@ function create_poker_game(room) {
   });
 
   poker_game.on("delete_poker_game", () => {
-    clearTimeout(poker_game.forced_action_timeout);
-    clearTimeout(poker_game.delete_game_timeout);
-    clearTimeout(poker_game.start_game_timeout);
-    clearTimeout(poker_game.state_transition_timeout);
-    poker_game.removeAllListeners();
+    poker_game.Destroy();
     delete poker_games[room];
   });
 }
