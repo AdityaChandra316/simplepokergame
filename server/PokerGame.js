@@ -381,15 +381,6 @@ class PokerGame extends EventEmitter {
     }
     return not_folded_player_index;
   }
-  #AwardHandWinnerPot(hand_winner_index, pots) {
-    const hand_winner = this.players[hand_winner_index];
-    for (const pot of pots) {
-      if (pot.eligible_player_indices.has(hand_winner_index)) {
-        hand_winner.chips += pot.chips;
-        hand_winner.amount_won_this_hand += pot.chips;
-      }
-    }
-  }
   #NoValidPlayersExist() {
     for (const player of this.players) {
       if (player.chips && !player.eliminated && !player.folded_this_hand) {
@@ -602,8 +593,9 @@ class PokerGame extends EventEmitter {
     const hand_winner_index = this.#HandWinnerIndex();
     if (hand_winner_index != -1) {
       this.hand_ended = true;
-      const pots = this.#CalculatePots();
-      this.#AwardHandWinnerPot(hand_winner_index, pots);
+      const hand_winning_player = this.players[hand_winner_index];
+      hand_winning_player.chips += this.total_pot;
+      hand_winning_player.amount_won_this_hand = this.total_pot;
       this.#EliminatePlayers();
       this.emit("state_update");
       // If everyone is eliminated except a singular player, we have found a winner and can end the game.
