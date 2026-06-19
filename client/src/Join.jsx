@@ -15,7 +15,7 @@ function Join() {
       <div>
         <p><strong>Join a Game</strong></p>
         <p>or <Link to="/create">create one</Link></p>
-        <input type="text" placeholder="Name" onChange={e => {
+        <input type="text" placeholder="Name" value={name} onChange={e => {
           if (e.target.value.length > 8) {
             return;
           }
