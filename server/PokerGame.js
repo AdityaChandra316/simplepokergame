@@ -85,7 +85,7 @@ class PokerGame extends EventEmitter {
       clearTimeout(this.delete_game_timeout);
       return;
     }
-    if (this.game_started || this.players.length >= 10 || !name || !name.length) {
+    if (this.game_started || this.players.length >= 10 || !name || !name.length || name.length > 8) {
       this.emit("connect_player_failure", player_id);
       return;
     }

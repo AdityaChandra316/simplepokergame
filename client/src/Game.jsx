@@ -14,7 +14,11 @@ function Game() {
     set_public_state(null);
     set_connect_player_failure(false);
     
-    const name = localStorage.getItem("name");
+    let name = localStorage.getItem("name");
+
+    if (name) {
+      name = name.substring(0, 8);
+    }
 
     socket.current = io("/", {
       autoConnect: false
