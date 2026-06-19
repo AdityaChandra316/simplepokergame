@@ -15,7 +15,12 @@ function Create() {
       <div>
         <p><strong>Create a Game</strong></p>
         <p>or <Link to="/join">join one</Link></p>
-        <input type="text" placeholder="Name" onChange={e => set_name(e.target.value)}/>
+        <input type="text" placeholder="Name" value={name} onChange={e => {
+          if (e.target.value.length > 8) {
+            return;
+          }
+          set_name(e.target.value);
+        }}/>
         <button onClick={async () => {
           const response = await fetch("/api/create_game", {
             method: "POST",
