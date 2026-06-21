@@ -70,7 +70,7 @@ class PokerGame extends EventEmitter {
     this.forced_action_timeout;
     this.state_transition_timeout;
   }
-  ConnectPlayer(player_id, name) {
+  ConnectPlayer(player_id, socket_id, name) {
     if (player_id in this.player_id_to_index) {
       const player_index = this.player_id_to_index[player_id];
       const player_at_index = this.players[player_index];
@@ -80,13 +80,13 @@ class PokerGame extends EventEmitter {
         this.number_of_connected_players++;
         this.emit("state_update");
       } else {
-        this.emit("individual_state_update", player_id);
+        this.emit("individual_state_update", socket_id);
       }
       clearTimeout(this.delete_game_timeout);
       return;
     }
-    if (this.game_started || this.players.length >= 10 || !name || !name.length || name.length > 8) {
-      this.emit("connect_player_failure", player_id);
+    if (this.game_started || this.players.length >= 10 || !name || !name.length || name.length > 20) {
+      this.emit("connect_player_failure", socket_id);
       return;
     }
     const player_index = this.players.length;

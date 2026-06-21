@@ -8,11 +8,11 @@ function Game() {
   const { room } = useParams();
   const socket = useRef(null);
   const [public_state, set_public_state] = useState(null);
-  const [connect_player_failure, set_connect_player_failure] = useState(false);
+  const [is_disconnected, set_is_disconnected] = useState(false);
 
   useEffect(() => {
     set_public_state(null);
-    set_connect_player_failure(false);
+    set_is_disconnected(false);
     
     const name = localStorage.getItem("name");
 
@@ -31,11 +31,9 @@ function Game() {
 
     socket.current.connect();
 
-    socket.current.on("state_update", (new_public_state) => {
-      set_public_state(new_public_state);
-    });
+    socket.current.on("state_update", new_public_state => set_public_state(new_public_state));
 
-    socket.current.on("connect_player_failure", () => set_connect_player_failure(true));
+    socket.current.on("disconnect", () => set_is_disconnected(true));
 
     return () => {
       socket.current.removeAllListeners();
@@ -43,7 +41,7 @@ function Game() {
     }
   }, [room]);
 
-  if (connect_player_failure) {
+  if (is_disconnected) {
     return <Navigate to="/join" replace/>;
   }
 

@@ -43,12 +43,12 @@ function create_poker_game(room) {
     }
   });
 
-  poker_game.on("individual_state_update", (player_id) => {
-    io.to(player_id + " " + room).emit("state_update", poker_game.PublicState(player_id));
+  poker_game.on("individual_state_update", (socket_id) => {
+    io.to(socket_id).emit("state_update", poker_game.PublicState(player_id));
   });
 
-  poker_game.on("connect_player_failure", (player_id) => {
-    io.to(player_id + " " + room).emit("connect_player_failure");
+  poker_game.on("connect_player_failure", (socket_id) => {
+    io.to(socket_id).disconnect(true);
   });
 
   poker_game.on("delete_poker_game", () => {
@@ -75,14 +75,14 @@ io.on("connection", (socket) => {
   const {room, player_id, name} = socket.handshake.auth;
 
   if (!(room in poker_games)) {
-    socket.emit("connect_player_failure");
+    socket.disconnect(true);
     return;
   }
 
   socket.join(player_id + " " + room);
   
   const poker_game = poker_games[room];
-  poker_game.ConnectPlayer(player_id, name);
+  poker_game.ConnectPlayer(player_id, socket.id, name);
 
   socket.on("request_start_game", () => poker_game.RequestStartGame(player_id));
   socket.on("fold", () => poker_game.Fold(player_id));
