@@ -48,7 +48,7 @@ function create_poker_game(room) {
   });
 
   poker_game.on("connect_player_failure", (socket_id) => {
-    io.to(socket_id).disconnect(true);
+    io.sockets.sockets.get(socket_id).disconnect(true);
   });
 
   poker_game.on("delete_poker_game", () => {
