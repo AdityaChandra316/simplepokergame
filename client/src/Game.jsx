@@ -28,11 +28,8 @@ function Game() {
     }
 
     socket.current.auth = { room, player_id, name };
-
     socket.current.connect();
-
     socket.current.on("state_update", new_public_state => set_public_state(new_public_state));
-
     socket.current.on("disconnect", () => set_is_disconnected(true));
 
     return () => {
