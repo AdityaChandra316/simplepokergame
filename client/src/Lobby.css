@@ -53,7 +53,7 @@
 #lobby_table_container {
   flex: 1 1 0;
 
-  overflow: scroll;
+  overflow: auto;
 }
 
 #lobby_table_container table {
@@ -71,6 +71,7 @@
   padding: 1em 0;
 
   text-align: center;
+  overflow-wrap: anywhere;
 }
 
 /* Lobby footer */
