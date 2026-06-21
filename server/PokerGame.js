@@ -80,7 +80,7 @@ class PokerGame extends EventEmitter {
         this.number_of_connected_players++;
         this.emit("state_update");
       } else {
-        this.emit("individual_state_update", socket_id);
+        this.emit("individual_state_update", player_id, socket_id);
       }
       clearTimeout(this.delete_game_timeout);
       return;

@@ -43,7 +43,7 @@ function create_poker_game(room) {
     }
   });
 
-  poker_game.on("individual_state_update", (socket_id) => {
+  poker_game.on("individual_state_update", (player_id, socket_id) => {
     io.to(socket_id).emit("state_update", poker_game.PublicState(player_id));
   });
 
